@@ -1,0 +1,7 @@
+django-admin startproject mellow
+python manage.py startapp skunk
+python manage.py migrate
+python manage.py makemigrations skunk
+python manage.py check
+python manage.py shell
+
