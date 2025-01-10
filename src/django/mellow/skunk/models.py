@@ -4,11 +4,28 @@ import uuid
 
 from django.db import models
 
+class Heeler(models.Model):
+    address = models.CharField(max_length=32)
+    essid = models.CharField(max_length=32)
+    frequency = models.CharField(max_length=32)
+    time_stamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("essid",)
+
+    def __repr__(self):
+        return self.essid
+
+    def __str__(self):
+        return self.essid
+
 class Host(models.Model):
+    active_flag = models.BooleanField(default=False)
     location = models.CharField(max_length=32)
     host = models.CharField(max_length=32)
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
+    type = models.CharField(max_length=32)
 
     class Meta:
         ordering = ("host",)
@@ -19,7 +36,7 @@ class Host(models.Model):
     def __str__(self):
         return self.host
 
-class Tasking(models.Model):
+class Task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     active_flag = models.BooleanField(default=False)
     name = models.CharField(max_length=32)

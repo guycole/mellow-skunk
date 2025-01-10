@@ -4,4 +4,4 @@ python manage.py migrate
 python manage.py makemigrations skunk
 python manage.py check
 python manage.py shell
-
+python manage.py createsuperuser
