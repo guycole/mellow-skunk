@@ -36,6 +36,20 @@ class Host(models.Model):
     def __str__(self):
         return self.host
 
+class Hyena(models.Model):
+    flight = models.CharField(max_length=32)
+    hex = models.CharField(max_length=32)
+    time_stamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("hex",)
+
+    def __repr__(self):
+        return self.hex
+
+    def __str__(self):
+        return self.hex
+
 class Task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     active_flag = models.BooleanField(default=False)
@@ -49,39 +63,6 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
-
-#class Observation(models.Model):
-#    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-#    host = models.ForeignKey(Host, on_delete=models.CASCADE)
-#    timestamp = models.DateTimeField(default=datetime.datetime.now(pytz.utc))
-#
-#    class Meta:
-#        ordering = ("timestamp",)
-#
-#    def __repr__(self):
-#        return f"{self.host} at {self.timestamp}"
-#
-#    def __str__(self):
-#        return f"{self.host} at {self.timestamp}"
-#
-#class Sample(models.Model):
-#    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-#    observation = models.ForeignKey(Observation, on_delete=models.CASCADE)
-#    name = models.CharField(max_length=32)
-#    value = models.FloatField()
-#
-#      id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-#    created = models.DateTimeField(auto_now_add=True)
-#    modified = models.DateTimeField(auto_now_add=True)
-#
-#    class Meta:
-#        ordering = ("observation", "name")
-#
-#    def __repr__(self):
-#        return f"{self.name} = {self.value}"
-#
-#    def __str__(self):
-#        return f"{self.name} = {self.value}"
     
 # ;;; Local Variables: ***
 # ;;; mode:python ***
