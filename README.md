@@ -13,3 +13,5 @@ hyena_obs_gauge 0.0
 # TYPE heeler_obs_gauge gauge
 heeler_obs_gauge 0.0
 
+
+https://www.geeksforgeeks.org/how-to-create-a-basic-api-using-django-rest-framework/
