@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from rest_framework import permissions, viewsets
+from rest_framework import generics, mixins, permissions, status, viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.contrib.auth.models import Group, User
  
 from .serializers import HeelerSerializer, HostSerializer, HyenaSerializer, TaskSerializer, GroupSerializer, UserSerializer
@@ -20,10 +23,33 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('name')
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
- 
-class HeelerViewSet(viewsets.ModelViewSet):
-    queryset = Heeler.objects.all()
+
+class HeelerList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    """
+    List all heeler observations, or create fresh observations.
+    """
     serializer_class = HeelerSerializer
+    
+    def get(self, request, format=None):
+        selected = Heeler.objects.all()
+        serializer = HeelerSerializer(selected, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        is_many = isinstance(request.data, list)
+        if is_many:
+            Heeler.objects.all().delete() # delete old
+            serializer = self.get_serializer(data=request.data, many=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#class HeelerViewSet(viewsets.ModelViewSet):
+#    queryset = Heeler.objects.all()
+#    serializer_class = HeelerSerializer
 
 class HostViewSet(viewsets.ModelViewSet):
     queryset = Host.objects.all()
