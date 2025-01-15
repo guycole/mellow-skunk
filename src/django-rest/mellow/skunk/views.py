@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group, User
  
 from .serializers import HeelerSerializer, HostSerializer, HyenaSerializer, TaskSerializer, GroupSerializer, UserSerializer
 from .models import Heeler, Host, Hyena, Task
+from .apps import HEELER_OBS_GAUGE
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -38,6 +39,7 @@ class HeelerList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
     def post(self, request, *args, **kwargs):
         is_many = isinstance(request.data, list)
         if is_many:
+            HEELER_OBS_GAUGE.set(len(request.data)) 
             Heeler.objects.all().delete() # delete old
             serializer = self.get_serializer(data=request.data, many=True)
             serializer.is_valid(raise_exception=True)
