@@ -7,7 +7,7 @@ from django.contrib.auth.models import Group, User
  
 from .serializers import HeelerSerializer, HostSerializer, HyenaSerializer, TaskSerializer, GroupSerializer, UserSerializer
 from .models import Heeler, Host, Hyena, Task
-from .apps import HEELER_OBS_GAUGE
+from .apps import HEELER_OBS_GAUGE, HYENA_OBS_GAUGE
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -49,6 +49,31 @@ class HeelerList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Generi
     
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class HyenaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    """
+    List all hyena observations, or create fresh observations.
+    """
+    serializer_class = HyenaSerializer
+    
+    def get(self, request, format=None):
+        selected = Hyena.objects.all()
+        serializer = HyenaSerializer(selected, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        is_many = isinstance(request.data, list)
+        if is_many:
+            HYENA_OBS_GAUGE.set(len(request.data)) 
+            Hyena.objects.all().delete() # delete old
+            serializer = self.get_serializer(data=request.data, many=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 #class HeelerViewSet(viewsets.ModelViewSet):
 #    queryset = Heeler.objects.all()
 #    serializer_class = HeelerSerializer
@@ -57,9 +82,9 @@ class HostViewSet(viewsets.ModelViewSet):
     queryset = Host.objects.all()
     serializer_class = HostSerializer
 
-class HyenaViewSet(viewsets.ModelViewSet):
-    queryset = Hyena.objects.all()
-    serializer_class = HyenaSerializer
+#class HyenaViewSet(viewsets.ModelViewSet):
+#    queryset = Hyena.objects.all()
+#    serializer_class = HyenaSerializer
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Title: curl-heeler-test-post.sh
-# Description: create host rpi4d 
+# Description: heeler observations
 # Development Environment: Ubuntu 18.04.3 LTS (Bionic Beaver)
 # Author: G.S. Cole (guycole at gmail dot com)
 #
