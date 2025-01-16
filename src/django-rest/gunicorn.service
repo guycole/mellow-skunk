@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=gsc
+Group=gsc
+WorkingDirectory=/home/gsc/Documents/github/mellow-skunk/src/django-rest/mellow
+ExecStart=/home/gsc/Documents/github/mellow-skunk/src/django-rest/venv/bin/python /home/gsc/Documents/github/mellow-skunk/src/django-rest/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          mellow.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
