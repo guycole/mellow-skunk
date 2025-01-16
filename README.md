@@ -2,6 +2,16 @@
 Mellow Skunk is a [django-rest](https://www.django-rest-framework.org/) application for mellow collectors such as [mellow-heeler](https://github.com/guycole/mellow-heeler) and [mellow-hyena](https://github.com/guycole/mellow-hyena).  Mellow Skunk provides a easy mechanism to share the most recent results of a collection cycle.  Mellow Skunk also exposes collection metrics to [prometheus](https://prometheus.io/) by using [django-prometheus](https://github.com/korfuri/django-prometheus).
 
 ## deployment
+Mellow collector hosts are all based on [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi).
+The mellow skunk application is distributed via github and expected to reside at ```/home/gsc/Documents/github/mellow-skunk```, and this path is hard coded in many scripts.
+
+The django-rest application executes from gunicorn invoked by systemd(1), and should always be available.  
+
+Nginx acts as a reverse proxy to gunicorn and is also started by systemd(1), and should always be available.
+
+## installation
+
+
 stuff
 
 , shares the results of the most recent collection cycle via REST and exposes simple prometheus statistics.  One instance of mellow-skunk should be active on every collection host.
