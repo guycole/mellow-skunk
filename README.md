@@ -55,9 +55,9 @@ Once mellow skunk has been installed and configured, the collection applications
 ## URL
 | URL      | Verb      | Payload                         |
 | -------- | ----------|-------------------------------- |
-| /heeler  | get, post | JSON (heeler collection report) |
+| /heeler  | get, post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-heeler-test-post.sh) |
 | /host    | get, post | JSON                            |
-| /hyena   | get. post | JSON (hyena collection report)  |
+| /hyena   | get. post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-hyena-test-post.sh)  |
 | /groups  | get       | JSON                            |
 | /metrics | get       | Prometheus Text [Example](https://github.com/guycole/mellow-skunk/blob/main/scrape.txt)|
 | /task    | get, post | JSON                            |
