@@ -7,9 +7,23 @@ The mellow skunk application is distributed via github and expected to reside at
 
 The django-rest application executes from gunicorn invoked by systemd(1), and should always be available.  
 
-Nginx acts as a reverse proxy to gunicorn and is also started by systemd(1), and should always be available.
+nginx(8) acts as a reverse proxy to gunicorn and is also started by systemd(1), and should always be available.
+
+## operation
+Once mellow skunk has been installed and configured, the collection applications can post a JSON payload for each collection cycle.  All previous results will be deleted and only the freshest content will be retained.  Also, the prometheus gauge for collection population will be updated.  The uploaded content can be reviewed w/a GET at the URL below.
 
 ## installation
+1. Clone mellow skunk repo within ```/home/gsc/Documents/github```
+    + Scripts are expecting application at ```/home/gsc/Documents/github/mellow-skunk```
+1. Establish python environment
+    + ```cd mellow-skunk/src/django-rest```
+    + Invoke virtualenv, i.e. ```virtualenv -p /usr/local/opt/python@3.9/bin/python3.9 venv```
+    + ```source venv/bin/activate```
+    + ```pip install -r requirements.txt```
+1. Verify you can start django
+    + ```cd mellow```
+    + ```python manage.py migrate```
+    + ```python manage.py runserver```
 
 
 stuff
