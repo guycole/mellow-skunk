@@ -24,7 +24,27 @@ Once mellow skunk has been installed and configured, the collection applications
     + ```cd mellow```
     + ```python manage.py migrate```
     + ```python manage.py runserver```
+1. Verify you can run mellow skunk with gunicorn
+    + ```gunicorn --bind 0.0.0.0:8000 mellow.wsgi```
+1. Configure systemd(1) to invoke gunicorn
+    + ```cd ..;ls``` (you should see two gunicorn.* files)
+    + ```sudo cp gunicorn.* /etc/systemd/system```
+    + ```sudo systemctl start gunicorn.socket```
+    + ```sudo systemctl enable gunicorn.socket```
+    + ```sudo systemctl status gunicorn.socket```
+    + ```curl -v --unix-socket /run/gunicorn.sock localhost```
+        + should see a JSON payload from skunk
+    + ```sudo systemctl status gunicorn```
+1. Configure nginx(8) reverse proxy
+    + Install nginx(8) if not already present
+        + ```sudo apt-get install nginx```
+        + ```cp reverse-proxy.conf /etc/nginx/sites-available```
+        + ```ln /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled```
+        + ```rm /etc/nginx/sites-enabled/default```
+        + ```sudo systemctl restart nginx```
+1. mellow-skunk should now be responding to you at ```http://localhost```
 
+## configuration
 
 stuff
 
