@@ -1,5 +1,10 @@
 # mellow-skunk
-django-rest application for mellow collectors, shares the results of the most recent collection cycle via REST and exposes simple prometheus statistics.  One instance of mellow-skunk should be active on every collection host.
+Mellow Skunk is a [django-rest](https://www.django-rest-framework.org/) application for mellow collectors such as [mellow-heeler](https://github.com/guycole/mellow-heeler) and [mellow-hyena](https://github.com/guycole/mellow-hyena).  Mellow Skunk provides a easy mechanism to share the most recent results of a collection cycle.  Mellow Skunk also exposes collection metrics to [prometheus](https://prometheus.io/) by using [django-prometheus](https://github.com/korfuri/django-prometheus).
+
+## deployment
+stuff
+
+, shares the results of the most recent collection cycle via REST and exposes simple prometheus statistics.  One instance of mellow-skunk should be active on every collection host.
 
 ## GET
 + things
