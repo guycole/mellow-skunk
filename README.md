@@ -53,15 +53,15 @@ Once mellow skunk has been installed and configured, the collection applications
     + Example [curl-task-heeler-post.sh](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-task-heeler-post.sh)
 
 ## URL
-| URL      | Verb      | Payload                         |
-| -------- | ----------|-------------------------------- |
-| /heeler  | get, post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-heeler-test-post.sh) |
-| /host    | get, post | JSON                            |
-| /hyena   | get. post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-hyena-test-post.sh)  |
-| /groups  | get       | JSON                            |
-| /metrics | get       | Prometheus Text [Example](https://github.com/guycole/mellow-skunk/blob/main/scrape.txt)|
-| /task    | get, post | JSON                            |
-| /users   | get, post | JSON                            |
+| URL       | Verb      | Payload                         |
+| --------- | ----------|-------------------------------- |
+| /heeler/  | get, post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-heeler-test-post.sh) |
+| /host     | get, post | JSON                            |
+| /hyena/   | get, post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-hyena-test-post.sh)  |
+| /groups   | get       | JSON                            |
+| /metrics  | get       | Prometheus Text [Example](https://github.com/guycole/mellow-skunk/blob/main/scrape.txt)|
+| /task/    | get, post | JSON                            |
+| /users    | get, post | JSON                            |
 
 ## Relevant Links
 + [django, nginx, gunicorn](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu#step-7-creating-systemd-socket-and-service-files-for-gunicorn)
