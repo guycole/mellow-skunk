@@ -4,7 +4,7 @@ Mellow Skunk is a [django-rest](https://www.django-rest-framework.org/) applicat
 There is only one skunk instance per host and it exposes statistics for all collection operations on the host.
 
 ## deployment
-![deployment](https://github.com/guycole/mellow-skunk/blob/main/md_url/deployment.png)
+![deployment](https://github.com/guycole/mellow-skunk/blob/main/md_uml/deployment.png)
 
 Mellow collector hosts are all based on [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi).
 The mellow skunk application is distributed via github and expected to reside at ```/home/gsc/Documents/github/mellow-skunk```, and this path is hard coded in many scripts.
