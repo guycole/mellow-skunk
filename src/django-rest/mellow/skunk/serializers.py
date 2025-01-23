@@ -18,7 +18,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class HeelerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Heeler
-        fields = ('address', 'essid', 'frequency', 'time_stamp')
+        fields = ('bssid', 'ssid', 'frequency', 'time_stamp')
 
 class HostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
