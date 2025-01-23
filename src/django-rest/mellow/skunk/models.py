@@ -4,20 +4,21 @@ import uuid
 
 from django.db import models
 
+# update
 class Heeler(models.Model):
-    address = models.CharField(max_length=32)
-    essid = models.CharField(max_length=32)
+    bssid = models.CharField(max_length=32)
+    ssid = models.CharField(max_length=32)
     frequency = models.CharField(max_length=32)
     time_stamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ("essid",)
+        ordering = ("ssid",)
 
     def __repr__(self):
-        return self.essid
+        return self.ssid
 
     def __str__(self):
-        return self.essid
+        return self.ssid
 
 class Host(models.Model):
     active_flag = models.BooleanField(default=False)
