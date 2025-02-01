@@ -1,13 +1,11 @@
-from django.shortcuts import render
-from rest_framework import generics, mixins, permissions, status, viewsets
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.contrib.auth.models import Group, User
- 
-from .serializers import HeelerSerializer, HostSerializer, HyenaSerializer, TaskSerializer, GroupSerializer, UserSerializer
-from .models import Heeler, Host, Hyena, Task
-from .apps import HEELER_OBS_GAUGE, HYENA_OBS_GAUGE
+
+from rest_framework import mixins, permissions, status, viewsets
+from rest_framework.response import Response
+
+from .apps import HEELER_OBS_GAUGE
+from .models import Heeler
+from .serializers import HeelerSerializer, GroupSerializer, UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -25,67 +23,29 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class HeelerList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    """
-    List all heeler observations, or create fresh observations.
-    """
+class HeelerViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Heeler.objects.all()
     serializer_class = HeelerSerializer
     
-    def get(self, request, format=None):
-        selected = Heeler.objects.all()
-        serializer = HeelerSerializer(selected, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
+        # should always be a list
         is_many = isinstance(request.data, list)
         if is_many:
             HEELER_OBS_GAUGE.set(len(request.data)) 
-            Heeler.objects.all().delete() # delete old
+            print(f"fresh heeler population: {len(request.data)}")
+
+            # delete old records
+            Heeler.objects.all().delete()
+
             serializer = self.get_serializer(data=request.data, many=True)
             serializer.is_valid(raise_exception=True)
             self.perform_create(serializer)
+
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class HyenaList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    """
-    List all hyena observations, or create fresh observations.
-    """
-    serializer_class = HyenaSerializer
-    
-    def get(self, request, format=None):
-        selected = Hyena.objects.all()
-        serializer = HyenaSerializer(selected, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, *args, **kwargs):
-        print(request.data)
-        is_many = isinstance(request.data, list)
-        if is_many:
-            HYENA_OBS_GAUGE.set(len(request.data)) 
-            Hyena.objects.all().delete() # delete old
-            serializer = self.get_serializer(data=request.data, many=True)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#class HeelerViewSet(viewsets.ModelViewSet):
-#    queryset = Heeler.objects.all()
-#    serializer_class = HeelerSerializer
-
-class HostViewSet(viewsets.ModelViewSet):
-    queryset = Host.objects.all()
-    serializer_class = HostSerializer
-
-#class HyenaViewSet(viewsets.ModelViewSet):
-#    queryset = Hyena.objects.all()
-#    serializer_class = HyenaSerializer
-
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+# ;;; Local Variables: ***
+# ;;; mode:python ***
+# ;;; End: ***

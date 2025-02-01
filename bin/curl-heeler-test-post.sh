@@ -9,7 +9,7 @@
 #
 HOST_URL="localhost:8000"
 #
-PAYLOAD='[{"address": "address1","essid": "essid1","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"},{"address": "address2","essid": "essid3","frequency": "2","time_stamp": "2025-01-12T19:50:25.584981Z"}]'
+PAYLOAD='[{"bssid":"address1","ssid":"essid1","frequency":"2","time_stamp":"2025-01-12T19:50:25.584981Z"},{"bssid":"address2","ssid":"essid3","frequency":"2","time_stamp":"2025-01-12T19:50:25.584981Z"}]'
 #echo $PAYLOAD
 #
 curl -v -H "Content-Type: application/json" -d "$PAYLOAD" http://$HOST_URL/heeler/
