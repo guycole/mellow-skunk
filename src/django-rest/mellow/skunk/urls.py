@@ -18,5 +18,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('heeler/', HeelerList.as_view()),
     path('hyena/', HyenaList.as_view()),
+    path('skunk/host/', SkunkHostDetail.as_view()),
     path('api-auth/', include('rest_framework.urls'))
 ]

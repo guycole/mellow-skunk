@@ -20,7 +20,7 @@ class HeelerSerializer(serializers.HyperlinkedModelSerializer):
         model = Heeler
         fields = ('bssid', 'ssid', 'frequency', 'time_stamp')
 
-class HostSerializer(serializers.HyperlinkedModelSerializer):
+class HostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Host
         fields = ('active_flag', 'location', 'host', 'latitude', 'longitude', 'type')

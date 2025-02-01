@@ -1,3 +1,7 @@
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+
 from django.shortcuts import render
 from rest_framework import generics, mixins, permissions, status, viewsets
 from rest_framework.decorators import api_view
@@ -85,6 +89,9 @@ class HostViewSet(viewsets.ModelViewSet):
 #class HyenaViewSet(viewsets.ModelViewSet):
 #    queryset = Hyena.objects.all()
 #    serializer_class = HyenaSerializer
+
+class SkunkHostDetail(APIView):
+    pass
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
