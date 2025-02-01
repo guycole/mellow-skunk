@@ -4,7 +4,6 @@ import uuid
 
 from django.db import models
 
-# update
 class Heeler(models.Model):
     bssid = models.CharField(max_length=32)
     ssid = models.CharField(max_length=32)
