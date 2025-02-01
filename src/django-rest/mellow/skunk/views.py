@@ -31,8 +31,9 @@ class HeelerViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Gen
         # should always be a list
         is_many = isinstance(request.data, list)
         if is_many:
-            HEELER_OBS_GAUGE.set(len(request.data)) 
-            print(f"fresh heeler population: {len(request.data)}")
+            heeler_population = float(len(request.data))
+            print(f"fresh heeler population: {heeler_population}")
+            HEELER_OBS_GAUGE.set(heeler_population) 
 
             # delete old records
             Heeler.objects.all().delete()
