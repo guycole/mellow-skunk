@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group, User
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.response import Response
 
-from .apps import HEELER_OBS_GAUGE
+from .apps import HEELER_OBS_GAUGE, POODLE_HUMIDITY_GAUGE, POODLE_PRESSURE_GAUGE, POODLE_TEMPERATURE_GAUGE, POODLE_ORIENTATION_PITCH_GAUGE, POODLE_ORIENTATION_ROLL_GAUGE, POODLE_ORIENTATION_YAW_GAUGE
 from .models import Heeler, Poodle
 from .serializers import HeelerSerializer, PoodleSerializer, GroupSerializer, UserSerializer
 
@@ -52,6 +52,13 @@ class PoodleViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Gen
     serializer_class = PoodleSerializer
     
     def create(self, request, *args, **kwargs):
+        POODLE_HUMIDITY_GAUGE.set(request.data['humidity_pct'])
+        POODLE_TEMPERATURE_GAUGE.set(request.data['temperature_c'])
+        POODLE_PRESSURE_GAUGE.set(request.data['pressure_mb'])
+        POODLE_ORIENTATION_PITCH_GAUGE.set(request.data['orientation_pitch_rads'])
+        POODLE_ORIENTATION_ROLL_GAUGE.set(request.data['orientation_roll_rads'])
+        POODLE_ORIENTATION_YAW_GAUGE.set(request.data['orientation_yaw_rads'])
+
         # delete old records
         Poodle.objects.all().delete()
 
