@@ -62,6 +62,7 @@ Once mellow skunk has been installed and configured, the collection applications
 | /hyena/   | get, post | JSON [Example](https://github.com/guycole/mellow-skunk/blob/main/bin/curl-hyena-test-post.sh)  |
 | /groups   | get       | JSON                            |
 | /metrics  | get       | Prometheus Text [Example](https://github.com/guycole/mellow-skunk/blob/main/scrape.txt)|
+| /poodle/  | get, post | JSON                            |
 | /task/    | get, post | JSON                            |
 | /users    | get, post | JSON                            |
 

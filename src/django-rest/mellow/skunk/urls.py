@@ -5,6 +5,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register(r'heeler', HeelerViewSet, basename='heeler')
+router.register(r'poodle', PoodleViewSet, basename='poodle')
 
 #router.register(r'users', UserViewSet)
 #router.register(r'groups', GroupViewSet)
