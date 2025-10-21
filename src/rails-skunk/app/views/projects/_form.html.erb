@@ -1,0 +1,12 @@
+<%= form_with model: project do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <%= form.label :enabled %>
+    <%= form.check_box :enabled %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
