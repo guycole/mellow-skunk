@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_203727) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_26_194744) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.boolean "enable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_projects_on_name", unique: true
   end
 end

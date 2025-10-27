@@ -1,39 +1,41 @@
-rails new rails-skunk
+curl http://localhost:3000/api/v1/projects
+curl -X POST -H "Content-Type: application/json" -d '{"project": {"name":"mastodon", "enable":false}}' http://localhost:3000/api/v1/projects
+curl -X POST -H "Content-Type: application/json" -d '{"project": {"name":"heeler", "enable":false}}' http://localhost:3000/api/v1/projects
+curl -X POST -H "Content-Type: application/json" -d '{"project": {"name":"hyena-adsb", "enable":false}}' http://localhost:3000/api/v1/projects
+curl -X POST -H "Content-Type: application/json" -d '{"project": {"name":"hyena-uat", "enable":false}}' http://localhost:3000/api/v1/projects
 
-gsc@entropy:323>bin/rails generate model Project name:string enable:boolean
+rails new rails-skunk --api
+
+rails db:create
+
+gsc@entropy:475>rails generate scaffold Project name:string enable:boolean
       invoke  active_record
-      create    db/migrate/20251018203727_create_projects.rb
+      create    db/migrate/20251024215026_create_projects.rb
       create    app/models/project.rb
       invoke    test_unit
       create      test/models/project_test.rb
       create      test/fixtures/projects.yml
-
-bin/rails db:migrate
-bin/rails console
-
-rails-skunk(dev)> Project.column_names
-
-p1 = Project.new(name: "p1", enable: true)
-p1.save
-p2 = Project.new(name: "p2", enable: true)
-p2.save
-p3 = Project.new(name: "p3", enable: true)
-p3.save
-
-Project.all
-
-config/routes.rb
-
-bin/rails generate controller Projects index --skip-routes
-
-gsc@entropy:332>bin/rails generate controller Projects index --skip-routes
-      create  app/controllers/projects_controller.rb
-      invoke  erb
-      create    app/views/projects
-      create    app/views/projects/index.html.erb
-      invoke  test_unit
-      create    test/controllers/projects_controller_test.rb
-      invoke  helper
-      create    app/helpers/projects_helper.rb
+      invoke  resource_route
+       route    resources :projects
+      invoke  scaffold_controller
+      create    app/controllers/projects_controller.rb
+      invoke    resource_route
       invoke    test_unit
+      create      test/controllers/projects_controller_test.rb
 
+rails db:migrate
+rails db:reset 
+
+rails generate migration AddUniqueIndexToProject name:uniq 
+rails db:migrate
+
+gsc@entropy:549>rails generate migration AddUniqueIndexToProject name:uniq
+      invoke  active_record
+      create    db/migrate/20251026194744_add_unique_index_to_project.rb
+gsc@entropy:550>rails db:migrate
+== 20251026194744 AddUniqueIndexToProject: migrating ==========================
+-- add_column(:projects, :name, :string)
+bin/rails aborted!
+StandardError: An error has occurred, this and all later migrations canceled: (StandardError)
+
+Fix by tweaking migration and active_record
